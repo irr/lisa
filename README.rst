@@ -79,6 +79,29 @@ Start server
 
 ::
 
+  LISA 1.0 beta (http://github.com/irr/lisa)
+  This is free software, and you are welcome to redistribute it and/or modify
+  it under the terms of the Boost Software License - Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+  LISA comes with ABSOLUTELY NO WARRANTY.
+
+  Allowed Options:
+    -h [ --help ]                                               help message
+    -d [ --database ] arg (=db=<db> user=<user> password=<pwd>) dsn 
+                                                                (mandatory)
+    -a [ --address ] arg (=0.0.0.0)                             interface 
+                                                                (optional)
+    -p [ --port ] arg (=1972)                                   port [1,65535] 
+                                                                (optional)
+    -t [ --threads ] arg (=42)                                  threads [1,100] 
+                                                                (optional)
+
+  samples: ./lisa -d "db=lisa user=root password=irr" or 
+           ./lisa -d "db=lisa user=root password=irr" -a localhost
+           ./lisa -d "db=lisa user=root password=irr" -a 127.0.0.1 -p 1972 -t 10
+
+::
+
   ./lisa -d "db=lisa user=root password=test" -a localhost
   
 Queue items

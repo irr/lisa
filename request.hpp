@@ -30,7 +30,7 @@ namespace http {
             int http_version_minor;
             std::vector<header> headers;
             std::string post_data;
-			soci::session *sql;
+            soci::session *sql;
         };
 
     } // namespace server3

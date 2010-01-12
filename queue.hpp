@@ -60,7 +60,7 @@ namespace http {
                             std::stringstream scount;
                             scount << count;
 
-							rep.content = scount.str();
+                            rep.content = scount.str();
 
                             content(req, rep);
                             return request_handler::finished;
@@ -74,7 +74,7 @@ namespace http {
                         (*req.sql).begin();
 
                         (*req.sql) << "SELECT k, d FROM q ORDER BY p DESC,k", soci::into(k), soci::into(d);
-                        
+
                         rep.content = d;
 
                         // Dequeue item if URI = "/"
@@ -126,7 +126,7 @@ namespace http {
                 {
                     rep = reply::stock_reply(reply::internal_server_error);
 
-					LIERR(e.what());
+                    LIERR(e.what());
 
                     return request_handler::finished;
                 }

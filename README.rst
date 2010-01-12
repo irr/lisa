@@ -37,7 +37,7 @@ C++ Environment
 
  sudo apt-get install cmake libboost1.40-all-dev libsoci-core-gcc-dev libsoci-mysql-gcc 
                             libmysqlclient15-dev liblog4cpp5 liblog4cpp5-dev
- git clone git://github.com/irr/lisa.git
+ git clone git@github.com:irr/lisa.git
  cd lisa
  cmake .
  make

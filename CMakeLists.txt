@@ -19,6 +19,18 @@ queue.cpp
 queue.hpp
 logger.hpp
 globals.hpp)
-INCLUDE_DIRECTORIES(/usr/include/soci /usr/include/mysql /usr/include/soci/mysql /usr/include/log4cpp)
-TARGET_LINK_LIBRARIES(lisa pthread boost_thread boost_system boost_program_options mysqlclient soci_core-gcc-3_0 soci_mysql-gcc-3_0 log4cpp)
-
+INCLUDE_DIRECTORIES(
+/usr/include/soci 
+/usr/include/mysql 
+/usr/include/soci/mysql 
+/usr/include/log4cpp
+)
+TARGET_LINK_LIBRARIES(lisa
+pthread
+boost_thread
+boost_system
+boost_program_options
+mysqlclient
+soci_core-gcc-3_0
+soci_mysql-gcc-3_0
+log4cpp)

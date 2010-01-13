@@ -15,6 +15,7 @@ request_parser.hpp
 server.cpp
 server.hpp
 router.hpp
+queue.cpp
 queue.hpp
 logger.hpp
 globals.hpp)

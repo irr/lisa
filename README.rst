@@ -122,7 +122,6 @@ Queue items
   > Host: localhost:1972
   > Content-Length: 6
   > Content-Type: application/x-www-form-urlencoded
-  > 
 
   < HTTP/1.0 200 OK
   < Server: Lisa 1.0
@@ -141,13 +140,11 @@ Queue items
   > Host: localhost:1972
   > Content-Length: 6
   > Content-Type: application/x-www-form-urlencoded
-  > 
 
   < HTTP/1.0 200 OK
   < Server: Lisa 1.0
   < Content-Length: 0
   < Content-Type: text/plain
-  < 
   
 Query item
 

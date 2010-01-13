@@ -21,8 +21,6 @@
 namespace http {
     namespace server3 {
 
-        boost::mutex queue::dequeue_mutex_;
-
         int queue::operator() (const request& req, reply& rep)
         {
             try
@@ -59,33 +57,24 @@ namespace http {
 
                     // Retrieve data and k
                     // URI must be: /spy or / (dequeue)
-                    unsigned long k;
+                    int r = (action.empty() ? 1 : 0);
                     std::string d;
 
-                    boost::mutex::scoped_lock lock(dequeue_mutex_);
+                    soci::statement st = ((*req.sql).prepare << "SELECT p(:r)",
+                                          soci::use(r),
+                                          soci::into(d));
 
-                    (*req.sql).begin();
-
-                    (*req.sql) << "SELECT k, d FROM q ORDER BY p DESC,k LIMIT 1 FOR UPDATE", soci::into(k), soci::into(d);
-
-                    rep.content = d;
-
-                    // Dequeue item if URI = "/"
-                    if (action.empty())
-                    {
-                        soci::statement st = ((*req.sql).prepare << "DELETE FROM q where k = :k",
-                                              soci::use(k));
-
-                        st.execute(true);
-                    }
-
-                    (*req.sql).commit();
+                    st.execute(true);
 
                     // Check for 404 (empty/no data) or 200
                     if (d.empty())
+                    {
                         rep = reply::stock_reply(reply::not_found);
-                    else
+                    }
+                    else{
+                        rep.content = d;
                         content(req, rep);
+                    }
 
                     return request_handler::finished;
                 }
@@ -118,6 +107,8 @@ namespace http {
             catch (std::exception const &e)
             {
                 rep = reply::stock_reply(reply::internal_server_error);
+
+                std::cerr << e.what() << std::endl;
 
                 LIERR(e.what());
 

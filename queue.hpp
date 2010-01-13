@@ -12,7 +12,6 @@
 #define HTTP_SERVER3_QUEUE_HPP
 
 #include <boost/noncopyable.hpp>
-#include <boost/thread/mutex.hpp>
 #include "globals.hpp"
 #include "reply.hpp"
 #include "request.hpp"
@@ -28,8 +27,6 @@ namespace http {
             int operator() (const request& req, reply& rep);
         private:
             void content(const request& req, reply& rep);
-
-			static boost::mutex dequeue_mutex_;
         };
 
     } // namespace server3

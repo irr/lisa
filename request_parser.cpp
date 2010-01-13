@@ -9,9 +9,14 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
+#include <algorithm>
+#include <string>
+
 #include "boost/lexical_cast.hpp"
 #include "request_parser.hpp"
 #include "request.hpp"
+
+#define UPPER_CONTENT_LENGTH "CONTENT-LENGTH"
 
 namespace http {
     namespace server3 {
@@ -287,7 +292,10 @@ namespace http {
                             std::vector<header>::const_iterator cit = req.headers.begin();
                             for (; cit != req.headers.end(); ++cit)
                             {
-                                if ((*cit).name == CONTENT_LENGTH)
+								std::string n = (*cit).name;
+								std::transform(n.begin(), n.end(), n.begin(), ::toupper);
+
+                                if (n == UPPER_CONTENT_LENGTH)
                                 {
                                     try
                                     {

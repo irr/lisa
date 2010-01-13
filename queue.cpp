@@ -13,6 +13,7 @@
 #include <string>
 #include <exception>
 #include <boost/lexical_cast.hpp>
+#include <boost/thread/locks.hpp>
 #include "queue.hpp"
 #include "request_handler.hpp"
 #include "soci.h"
@@ -20,6 +21,8 @@
 
 namespace http {
     namespace server3 {
+
+        boost::mutex queue::soci_mutex_;
 
         int queue::operator() (const request& req, reply& rep)
         {
@@ -36,15 +39,17 @@ namespace http {
                         rep = reply::stock_reply(reply::bad_request);
                         return request_handler::finished;
                     }
-                }
+                }             
 
                 // Check for queries size/count/spy or dequeue(default)
                 if (req.method == "GET")
                 {
+                    soci::session sql(*req.database_pool);
+
                     if (action == "size" || action == "count")
                     {
                         int count;
-                        (*req.sql) << "SELECT COUNT(*) FROM q", soci::into(count);
+                        sql << "SELECT COUNT(*) FROM q", soci::into(count);
 
                         std::stringstream scount;
                         scount << count;
@@ -60,7 +65,7 @@ namespace http {
                     int r = (action.empty() ? 1 : 0);
                     std::string d;
 
-                    soci::statement st = ((*req.sql).prepare << "SELECT p(:r)",
+                    soci::statement st = (sql.prepare << "SELECT p(:r)",
                                           soci::use(r),
                                           soci::into(d));
 
@@ -88,7 +93,11 @@ namespace http {
 
                         int p = boost::lexical_cast<int>(uri);
 
-                        soci::statement st = ((*req.sql).prepare << "INSERT INTO q(d, p) VALUES (:d, :p)",
+						boost::mutex::scoped_lock lock(soci_mutex_);
+
+                        soci::session sql(*req.database_pool);
+
+                        soci::statement st = (sql.prepare << "INSERT INTO q(d, p) VALUES (:d, :p)",
                                               soci::use(d),
                                               soci::use(p));
 

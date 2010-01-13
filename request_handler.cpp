@@ -52,8 +52,7 @@ namespace http {
             }
 
             // Router request based upon a REST API
-			soci::session sql((*database_pool_));
-			req.sql = &sql;
+			req.database_pool = &(*database_pool_);
 
 			router r(req, rep);
 

@@ -79,6 +79,10 @@ Start server
 
 ::
 
+  ./lisa --help
+
+::
+
   LISA 1.0 beta (http://github.com/irr/lisa)
   This is free software, and you are welcome to redistribute it and/or modify
   it under the terms of the Boost Software License - Version 1.0.

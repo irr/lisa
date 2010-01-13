@@ -48,6 +48,29 @@ MySQL
 
   CREATE TABLE q(k SERIAL, d VARCHAR(<N>) NOT NULL, p INT NOT NULL, PRIMARY KEY(k));
   CREATE INDEX ip ON q(p DESC);
+  
+::
+  
+  DELIMITER //
+  DROP FUNCTION IF EXISTS p//
+  CREATE FUNCTION p(remove INT) 
+  RETURNS VARCHAR(65000)
+  NOT DETERMINISTIC
+  BEGIN 
+    DECLARE data VARCHAR(65000);
+    DECLARE rowid BIGINT;
+    SELECT k, d INTO rowid, data FROM q ORDER BY p DESC,k LIMIT 1 FOR UPDATE; 
+    IF rowid > 0 THEN
+      IF remove > 0 THEN 
+        DELETE FROM q WHERE k = rowid; 
+      END IF; 
+    END IF;
+    IF ISNULL(data) > 0 THEN
+      SET data = "";
+    END IF;
+    RETURN data;
+  END//
+  DELIMITER ;
 
 ======
 Syntax

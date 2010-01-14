@@ -30,7 +30,7 @@ namespace http {
             {
             }
 
-            int exec()
+            int exec() const
             {
                 return queue()(req_, rep_);
             }

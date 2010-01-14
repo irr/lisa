@@ -239,7 +239,7 @@ Dequeue item
 Tests
 =====
 
-JMeter
+jmeter [10.000 concurrent (en/de)queues using 100 threads]
 
 ::
 

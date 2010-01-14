@@ -292,8 +292,8 @@ namespace http {
                             std::vector<header>::const_iterator cit = req.headers.begin();
                             for (; cit != req.headers.end(); ++cit)
                             {
-								std::string n = (*cit).name;
-								std::transform(n.begin(), n.end(), n.begin(), ::toupper);
+                                std::string n = (*cit).name;
+                                std::transform(n.begin(), n.end(), n.begin(), ::toupper);
 
                                 if (n == UPPER_CONTENT_LENGTH)
                                 {

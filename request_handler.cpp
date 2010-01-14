@@ -52,9 +52,9 @@ namespace http {
             }
 
             // Router request based upon a REST API
-			req.database_pool = &(*database_pool_);
+            req.database_pool = &(*database_pool_);
 
-			router r(req, rep);
+            router r(req, rep);
 
             if (r.exec() == declined)
             {

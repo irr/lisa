@@ -99,27 +99,26 @@
             <latency>true</latency>
             <timestamp>true</timestamp>
             <success>true</success>
-            <label>true</label>
+            <label>false</label>
             <code>true</code>
             <message>true</message>
             <threadName>true</threadName>
-            <dataType>true</dataType>
+            <dataType>false</dataType>
             <encoding>false</encoding>
-            <assertions>true</assertions>
-            <subresults>true</subresults>
+            <assertions>false</assertions>
+            <subresults>false</subresults>
             <responseData>false</responseData>
             <samplerData>false</samplerData>
-            <xml>true</xml>
+            <xml>false</xml>
             <fieldNames>false</fieldNames>
             <responseHeaders>false</responseHeaders>
             <requestHeaders>false</requestHeaders>
             <responseDataOnError>false</responseDataOnError>
             <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
             <assertionsResultsToSave>0</assertionsResultsToSave>
-            <bytes>true</bytes>
           </value>
         </objProp>
-        <stringProp name="filename"></stringProp>
+        <stringProp name="filename">data.csv</stringProp>
       </ResultCollector>
       <hashTree/>
     </hashTree>

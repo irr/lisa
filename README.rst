@@ -46,7 +46,10 @@ MySQL
 
 ::
 
-  CREATE TABLE q(k SERIAL, d VARCHAR(<N>) NOT NULL, p INT NOT NULL, PRIMARY KEY(k));
+  CREATE TABLE q(k BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, 
+                 d VARCHAR(<N>) NOT NULL, 
+                 p INT NOT NULL, 
+                 PRIMARY KEY(k));
   CREATE INDEX ip ON q(p DESC);
   
 ::

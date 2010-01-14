@@ -245,6 +245,7 @@ jmeter [10.000 concurrent (en/de)queues using 100 threads]
 
   curl http://localhost:1972/size (*)
   jmeter -n -t lisa.jmx -p lisa.properties
+  (data.csv will be generated) (**)
 
 :: 
   
@@ -259,3 +260,26 @@ jmeter [10.000 concurrent (en/de)queues using 100 threads]
 ::
 
   curl http://localhost:1972/size (must match with (*))
+
+========
+Analysis
+========
+
+Awk
+
+::
+
+  cat data.csv |awk -F "," '{print $2}' > data.dat (**)
+
+R
+
+::
+
+  > d <- read.table("data.dat")
+  > v <- as.vector(d$V1)
+  > summary(v)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1.00   30.00   35.00   43.32   52.00  167.00 
+  > sd(v)
+  [1] 24.53601
+  > hist(v)

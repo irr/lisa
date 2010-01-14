@@ -64,7 +64,10 @@ namespace http {
                     std::string d;
                     soci::indicator ind;
 
-                    sql << "SELECT p(:r)", soci::use((action.empty() ? 1 : 0)), soci::into(d, ind);
+                    soci::statement st = (sql.prepare << "SELECT p(:r)",
+                                          soci::use((action.empty() ? 1 : 0)),
+                                          soci::into(d, ind));
+                    st.execute(true);
 
                     if (sql.got_data())
                     {
@@ -106,7 +109,9 @@ namespace http {
 
                         soci::session sql(*req.database_pool);
 
-                        sql << "INSERT INTO q(d, p) VALUES (:d, :p)", soci::use(d), soci::use(p);
+                        soci::statement st = (sql.prepare << "INSERT INTO q(d, p) VALUES (:d, :p)",
+                                              soci::use(d), soci::use(p));
+                        st.execute(true);
 
                         content(req, rep);
                     }

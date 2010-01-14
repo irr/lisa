@@ -14,7 +14,6 @@
 
 #include <string>
 #include <vector>
-#include <memory>
 #include "header.hpp"
 #include "soci.h"
 

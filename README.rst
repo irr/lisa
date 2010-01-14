@@ -65,9 +65,6 @@ MySQL
         DELETE FROM q WHERE k = rowid; 
       END IF; 
     END IF;
-    IF ISNULL(data) > 0 THEN
-      SET data = "";
-    END IF;
     RETURN data;
   END//
   DELIMITER ;

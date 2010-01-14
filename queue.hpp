@@ -24,9 +24,9 @@ namespace http {
             : private boost::noncopyable
         {
         public:
-            int operator() (const request& req, reply& rep);
+            int operator() (const request& req, reply& rep) const;
         private:
-            void content(const request& req, reply& rep);
+            void content(const request& req, reply& rep) const;
         };
 
     } // namespace server3

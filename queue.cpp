@@ -20,7 +20,7 @@
 namespace http {
     namespace server3 {
 
-        int queue::operator() (const request& req, reply& rep)
+        int queue::operator() (const request& req, reply& rep) const
         {
             try
             {
@@ -130,7 +130,7 @@ namespace http {
             return request_handler::declined;
         }
 
-        void queue::content(const request& req, reply& rep)
+        void queue::content(const request& req, reply& rep) const
         {
             header hcl, hct;
 

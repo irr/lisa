@@ -30,7 +30,7 @@ namespace http {
             int http_version_minor;
             std::vector<header> headers;
             std::string post_data;
-			soci::connection_pool *database_pool;
+            soci::connection_pool *database_pool;
         };
 
     } // namespace server3

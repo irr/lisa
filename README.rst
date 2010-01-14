@@ -69,6 +69,15 @@ MySQL
   END//
   DELIMITER ;
 
+::
+
+  select @@AUTOCOMMIT; (must be 1)
+  +--------------+
+  | @@AUTOCOMMIT |
+  +--------------+
+  |            1 | 
+  +--------------+
+
 ======
 Syntax
 ======

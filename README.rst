@@ -235,3 +235,27 @@ Dequeue item
   < Content-Type: text/plain
   luma
   
+=====
+Tests
+=====
+
+JMeter
+
+::
+
+  curl http://localhost:1972/size (*)
+  jmeter -n -t lisa.jmx -p lisa.properties
+
+:: 
+  
+  Creating summariser <summary>
+  Created the tree successfully using lisa.jmx
+  Starting the test @ Thu Jan 14 11:57:29 BRST 2010 (1263477449542)
+  Waiting for possible shutdown message on port 4445
+  summary = 20000 in   9.4s = 2122.2/s Avg:    42 Min:     0 Max:   191 Err:     0 (0.00%)
+  Tidying up ...    @ Thu Jan 14 11:57:39 BRST 2010 (1263477459297)
+  ... end of run
+
+::
+
+  curl http://localhost:1972/size (must match with (*))

@@ -11,14 +11,15 @@
 #ifndef HTTP_SERVER3_LOGGER_HPP
 #define HTTP_SERVER3_LOGGER_HPP
 
+#include <iostream>
 #include "SyslogAppender.hh"
 #include "Category.hh"
 #include "CategoryStream.hh"
 
 #include <boost/noncopyable.hpp>
 
-#define LINFO(MESSAGE) g_logger.get().log(log4cpp::Priority::INFO, MESSAGE)
-#define LIERR(MESSAGE) g_logger.get().log(log4cpp::Priority::ERROR, MESSAGE)
+#define LINFO(MESSAGE) g_logger.get().log(log4cpp::Priority::INFO, MESSAGE); std::cout << MESSAGE << std::endl
+#define LIERR(MESSAGE) g_logger.get().log(log4cpp::Priority::ERROR, MESSAGE); std::cerr << MESSAGE << std::endl
 
 namespace http {
     namespace server3 {

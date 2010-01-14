@@ -12,7 +12,6 @@
 #include <string>
 #include <exception>
 #include <boost/lexical_cast.hpp>
-#include <boost/thread/locks.hpp>
 #include "queue.hpp"
 #include "request_handler.hpp"
 #include "soci.h"
@@ -20,8 +19,6 @@
 
 namespace http {
     namespace server3 {
-
-        boost::mutex queue::soci_mutex_;
 
         int queue::operator() (const request& req, reply& rep)
         {
@@ -104,8 +101,6 @@ namespace http {
                         std::string d = req.post_data.substr(2);
 
                         int p(boost::lexical_cast<int>(uri));
-
-                        boost::mutex::scoped_lock lock(soci_mutex_);
 
                         soci::session sql(*req.database_pool);
 

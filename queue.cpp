@@ -8,7 +8,6 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <iostream>
 #include <sstream>
 #include <string>
 #include <exception>
@@ -39,7 +38,7 @@ namespace http {
                         rep = reply::stock_reply(reply::bad_request);
                         return request_handler::finished;
                     }
-                }             
+                }
 
                 // Check for queries size/count/spy or dequeue(default)
                 if (req.method == "GET")
@@ -62,23 +61,33 @@ namespace http {
 
                     // Retrieve data and k
                     // URI must be: /spy or / (dequeue)
-                    int r = (action.empty() ? 1 : 0);
                     std::string d;
+                    soci::indicator ind;
 
-                    soci::statement st = (sql.prepare << "SELECT p(:r)",
-                                          soci::use(r),
-                                          soci::into(d));
+                    sql << "SELECT p(:r)", soci::use((action.empty() ? 1 : 0)), soci::into(d, ind);
 
-                    st.execute(true);
-
-                    // Check for 404 (empty/no data) or 200
-                    if (d.empty())
+                    if (sql.got_data())
                     {
-                        rep = reply::stock_reply(reply::not_found);
+                        switch (ind)
+                        {
+                            case soci::i_ok:
+                                rep.content = d;
+                                content(req, rep);
+                                break;
+                            case soci::i_null:
+                                rep = reply::stock_reply(reply::not_found);
+                                break;
+                            default:
+                                LIERR("soci: error retrieving data from SELECT p(:r)");
+                                rep = reply::stock_reply(reply::internal_server_error);
+                                return request_handler::finished;
+                        }
                     }
-                    else{
-                        rep.content = d;
-                        content(req, rep);
+                    else
+                    {
+                        LIERR("soci: no data from SELECT p(:r)");
+                        rep = reply::stock_reply(reply::internal_server_error);
+                        return request_handler::finished;
                     }
 
                     return request_handler::finished;
@@ -91,17 +100,13 @@ namespace http {
 
                         std::string d = req.post_data.substr(2);
 
-                        int p = boost::lexical_cast<int>(uri);
+                        int p(boost::lexical_cast<int>(uri));
 
-						boost::mutex::scoped_lock lock(soci_mutex_);
+                        boost::mutex::scoped_lock lock(soci_mutex_);
 
                         soci::session sql(*req.database_pool);
 
-                        soci::statement st = (sql.prepare << "INSERT INTO q(d, p) VALUES (:d, :p)",
-                                              soci::use(d),
-                                              soci::use(p));
-
-                        st.execute(true);
+                        sql << "INSERT INTO q(d, p) VALUES (:d, :p)", soci::use(d), soci::use(p);
 
                         content(req, rep);
                     }
@@ -116,8 +121,6 @@ namespace http {
             catch (std::exception const &e)
             {
                 rep = reply::stock_reply(reply::internal_server_error);
-
-                std::cerr << e.what() << std::endl;
 
                 LIERR(e.what());
 

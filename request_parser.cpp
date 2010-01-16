@@ -17,6 +17,8 @@
 #include "request.hpp"
 
 #define UPPER_CONTENT_LENGTH "CONTENT-LENGTH"
+#define UPPER_CONTENT_TYPE   "CONTENT-TYPE"
+#define UPPER_MIME_TYPE      "APPLICATION/X-WWW-FORM-URLENCODED"
 
 namespace http {
     namespace server3 {
@@ -287,24 +289,31 @@ namespace http {
                     if (input == '\n')
                     {
                         state_ = header_line_start;
-                        if (0 == cl_)
+                        std::vector<header>::const_iterator cit = req.headers.begin();
+                        for (; cit != req.headers.end(); ++cit)
                         {
-                            std::vector<header>::const_iterator cit = req.headers.begin();
-                            for (; cit != req.headers.end(); ++cit)
+                            std::string n = (*cit).name;
+                            std::transform(n.begin(), n.end(), n.begin(), ::toupper);
+							
+                            if (n == UPPER_CONTENT_LENGTH)
                             {
-                                std::string n = (*cit).name;
-                                std::transform(n.begin(), n.end(), n.begin(), ::toupper);
-
-                                if (n == UPPER_CONTENT_LENGTH)
+                                try
                                 {
-                                    try
-                                    {
-                                        cl_ = boost::lexical_cast<int>((*cit).value);
-                                    }
-                                    catch (const boost::bad_lexical_cast& e)
-                                    {
-                                        return false;
-                                    }
+                                    cl_ = boost::lexical_cast<int>((*cit).value);
+                                }
+                                catch (const boost::bad_lexical_cast& e)
+                                {
+                                    return false;
+                                }
+                            }
+                            else if (n == UPPER_CONTENT_TYPE)
+                            {
+                                std::string m = (*cit).value;
+                                std::transform(m.begin(), m.end(), m.begin(), ::toupper);
+
+                                if (m != UPPER_MIME_TYPE)
+                                {
+                                    return false;
                                 }
                             }
                         }

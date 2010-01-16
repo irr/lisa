@@ -295,7 +295,7 @@ namespace http {
                             std::string n = (*cit).name;
                             std::transform(n.begin(), n.end(), n.begin(), ::toupper);
 							
-                            if (n == UPPER_CONTENT_LENGTH)
+                            if ((0 == cl_) && (n == UPPER_CONTENT_LENGTH))
                             {
                                 try
                                 {

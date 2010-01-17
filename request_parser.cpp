@@ -31,6 +31,7 @@ namespace http {
         void request_parser::reset()
         {
             state_ = method_start;
+			cl_ = 0;
         }
 
         boost::tribool request_parser::consume(request& req, char input)

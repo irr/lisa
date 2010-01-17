@@ -269,8 +269,8 @@ Awk
 
 ::
 
-  cat data.csv |awk -F "," '{print $2}' > data.dat (**)
-
+  awk -F "," '{print $2}' data.csv > data.dat (**)
+  
 R
 
 ::

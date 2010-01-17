@@ -31,7 +31,7 @@ namespace http {
         void request_parser::reset()
         {
             state_ = method_start;
-			cl_ = 0;
+            cl_ = 0;
         }
 
         boost::tribool request_parser::consume(request& req, char input)
@@ -295,8 +295,8 @@ namespace http {
                         {
                             std::string n = (*cit).name;
                             std::transform(n.begin(), n.end(), n.begin(), ::toupper);
-							
-                            if ((0 == cl_) && (n == UPPER_CONTENT_LENGTH))
+
+                            if (n == UPPER_CONTENT_LENGTH)
                             {
                                 try
                                 {

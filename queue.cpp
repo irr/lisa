@@ -22,11 +22,11 @@ namespace http {
 
         int queue::operator() (const request& req, reply& rep) const
         {
+            std::string action((req.uri.size() > 1) ? req.uri.substr(1) : "");
+
             try
             {
                 // Check for valid requests.
-                std::string action((req.uri.size() > 1) ? req.uri.substr(1) : "");
-
                 if ((!action.empty()) &&
                     (action != "spy") && (action != "size") && (action != "count"))
                 {
@@ -36,12 +36,20 @@ namespace http {
                         return request_handler::finished;
                     }
                 }
+            }
+            catch (std::exception const &exc)
+            {
+                LIERR(exc.what());
+            }
 
+            soci::session sql(*req.database_pool);
+            bool rollback = false;
+
+            try
+            {
                 // Check for queries size/count/spy or dequeue(default)
                 if (req.method == "GET")
                 {
-                    soci::session sql(*req.database_pool);
-
                     if (action == "size" || action == "count")
                     {
                         int count;
@@ -55,6 +63,9 @@ namespace http {
                         content(req, rep);
                         return request_handler::finished;
                     }
+
+                    sql.begin();
+                    rollback = true;
 
                     // Retrieve data and k
                     // URI must be: /spy or / (dequeue)
@@ -87,8 +98,11 @@ namespace http {
                     {
                         LIERR("soci: no data from SELECT p(:r)");
                         rep = reply::stock_reply(reply::internal_server_error);
+                        sql.rollback();
                         return request_handler::finished;
                     }
+
+                    sql.commit();
 
                     return request_handler::finished;
                 }
@@ -102,13 +116,16 @@ namespace http {
 
                         int p(boost::lexical_cast<int>(uri));
 
-                        soci::session sql(*req.database_pool);
+                        sql.begin();
+                        rollback = true;
 
                         soci::statement st = (sql.prepare << "INSERT INTO q(d, p) VALUES (:d, :p)",
                                               soci::use(d), soci::use(p));
                         st.execute(true);
 
                         content(req, rep);
+
+                        sql.commit();
                     }
                     else
                     {
@@ -120,6 +137,18 @@ namespace http {
             }
             catch (std::exception const &e)
             {
+                if (rollback)
+                {
+                    try
+                    {
+                        sql.rollback();
+                    }
+                    catch (std::exception const &ex)
+                    {
+                        LIERR(ex.what());
+                    }
+                }
+
                 rep = reply::stock_reply(reply::internal_server_error);
 
                 LIERR(e.what());

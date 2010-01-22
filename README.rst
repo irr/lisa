@@ -257,10 +257,14 @@ jmeter [10.000 concurrent (en/de)queues using 100 threads]
   
   Creating summariser <summary>
   Created the tree successfully using lisa.jmx
-  Starting the test @ Thu Jan 14 11:57:29 BRST 2010 (1263477449542)
+  Starting the test @ Fri Jan 22 21:54:05 BRST 2010 (1264204445219)
   Waiting for possible shutdown message on port 4445
-  summary = 20000 in   9.4s = 2122.2/s Avg:    42 Min:     0 Max:   191 Err:     0 (0.00%)
-  Tidying up ...    @ Thu Jan 14 11:57:39 BRST 2010 (1263477459297)
+  summary +     1 in   0.1s =   14.3/s Avg:    70 Min:    70 Max:    70 Err:     0 (0.00%)
+  summary + 19647 in  54.4s =  361.3/s Avg:   272 Min:    55 Max:  1069 Err:     0 (0.00%)
+  summary = 19648 in  54.4s =  361.1/s Avg:   272 Min:    55 Max:  1069 Err:     0 (0.00%)
+  summary +   352 in   1.6s =  223.9/s Avg:   153 Min:    83 Max:   260 Err:     0 (0.00%)
+  summary = 20000 in  55.7s =  358.9/s Avg:   270 Min:    55 Max:  1069 Err:     0 (0.00%)
+  Tidying up ...    @ Fri Jan 22 21:55:01 BRST 2010 (1264204501319)
   ... end of run
 
 ::

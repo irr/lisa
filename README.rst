@@ -49,7 +49,7 @@ MySQL
   CREATE TABLE q(k BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, 
                  d VARCHAR(<N>) NOT NULL, 
                  p INT NOT NULL, 
-                 PRIMARY KEY(k));
+                 PRIMARY KEY(k)) ENGINE=INNODB;
   CREATE INDEX ip ON q(p DESC);
   
 ::
@@ -74,11 +74,17 @@ MySQL
 
 ::
 
-  select @@AUTOCOMMIT; (must be 1)
+  [mysqld]
+  init_connect          = 'SET AUTOCOMMIT=0'
+  transaction-isolation = READ-COMMITTED
+
+::
+
+  select @@AUTOCOMMIT; (must be 0)
   +--------------+
   | @@AUTOCOMMIT |
   +--------------+
-  |            1 | 
+  |            0 | 
   +--------------+
 
 ======

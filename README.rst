@@ -75,7 +75,7 @@ MySQL
 ::
 
   [mysqld]
-  init_connect          = 'SET AUTOCOMMIT=0'
+  init-connect          = 'SET AUTOCOMMIT=0'
   transaction-isolation = READ-COMMITTED
 
 ======
@@ -248,14 +248,12 @@ jmeter [10.000 concurrent (en/de)queues using 100 threads]
   
   Creating summariser <summary>
   Created the tree successfully using lisa.jmx
-  Starting the test @ Fri Jan 22 21:54:05 BRST 2010 (1264204445219)
+  Starting the test @ Fri Jan 22 22:35:13 BRST 2010 (1264206913338)
   Waiting for possible shutdown message on port 4445
-  summary +     1 in   0.1s =   14.3/s Avg:    70 Min:    70 Max:    70 Err:     0 (0.00%)
-  summary + 19647 in  54.4s =  361.3/s Avg:   272 Min:    55 Max:  1069 Err:     0 (0.00%)
-  summary = 19648 in  54.4s =  361.1/s Avg:   272 Min:    55 Max:  1069 Err:     0 (0.00%)
-  summary +   352 in   1.6s =  223.9/s Avg:   153 Min:    83 Max:   260 Err:     0 (0.00%)
-  summary = 20000 in  55.7s =  358.9/s Avg:   270 Min:    55 Max:  1069 Err:     0 (0.00%)
-  Tidying up ...    @ Fri Jan 22 21:55:01 BRST 2010 (1264204501319)
+  summary + 16975 in  46.2s =  367.0/s Avg:   267 Min:    50 Max:  1238 Err:     0 (0.00%)
+  summary +  3025 in   7.4s =  410.2/s Avg:   220 Min:    68 Max:   355 Err:     0 (0.00%)
+  summary = 20000 in  53.3s =  375.2/s Avg:   260 Min:    50 Max:  1238 Err:     0 (0.00%)
+  Tidying up ...    @ Fri Jan 22 22:36:07 BRST 2010 (1264206967076)
   ... end of run
 
 ::
@@ -280,7 +278,6 @@ R
   > v <- as.vector(d$V1)
   > summary(v)
      Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-     0.0    40.0   115.0   156.9   250.0  1069.0 
-  > 
+      0.0    54.0   209.0   191.3   255.0  1238.0 
   > sd(v)
-  [1] 135.1854
+  [1] 138.7683

@@ -78,15 +78,6 @@ MySQL
   init_connect          = 'SET AUTOCOMMIT=0'
   transaction-isolation = READ-COMMITTED
 
-::
-
-  select @@AUTOCOMMIT; (must be 0)
-  +--------------+
-  | @@AUTOCOMMIT |
-  +--------------+
-  |            0 | 
-  +--------------+
-
 ======
 Syntax
 ======

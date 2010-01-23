@@ -22,6 +22,12 @@ namespace http {
 
         int queue::operator() (const request& req, reply& rep) const
         {
+            if ((req.method != "GET") && (req.method != "POST"))
+            {
+                rep = reply::stock_reply(reply::method_not_allowed);
+                return request_handler::finished;
+            }
+
             std::string action((req.uri.size() > 1) ? req.uri.substr(1) : "");
 
             try

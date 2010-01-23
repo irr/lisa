@@ -43,6 +43,8 @@ namespace http {
                 "HTTP/1.0 403 Forbidden\r\n";
             const std::string not_found =
                 "HTTP/1.0 404 Not Found\r\n";
+            const std::string method_not_allowed =
+                "HTTP/1.0 405 Method Not Allowed\r\n";
             const std::string internal_server_error =
                 "HTTP/1.0 500 Internal Server Error\r\n";
             const std::string not_implemented =
@@ -80,6 +82,8 @@ namespace http {
                         return boost::asio::buffer(forbidden);
                     case reply::not_found:
                         return boost::asio::buffer(not_found);
+                    case reply::method_not_allowed:
+                        return boost::asio::buffer(method_not_allowed);
                     case reply::internal_server_error:
                         return boost::asio::buffer(internal_server_error);
                     case reply::not_implemented:

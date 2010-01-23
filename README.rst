@@ -288,8 +288,8 @@ R
   > d <- read.table("data.dat")
   > v <- as.vector(d$V1)
   > summary(v)
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   1.00   30.00   35.00   43.32   52.00  167.00 
+     Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     0.0    40.0   115.0   156.9   250.0  1069.0 
+  > 
   > sd(v)
-  [1] 24.53601
-  > hist(v)
+  [1] 135.1854

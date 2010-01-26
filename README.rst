@@ -47,7 +47,7 @@ MySQL
 ::
 
   CREATE TABLE q(k BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, 
-                 d VARCHAR(<N>) NOT NULL, 
+                 d TEXT NOT NULL, 
                  p INT NOT NULL, 
                  PRIMARY KEY(k)) ENGINE=INNODB;
   CREATE INDEX ip ON q(p DESC);
@@ -57,11 +57,11 @@ MySQL
   DELIMITER //
   DROP FUNCTION IF EXISTS p//
   CREATE FUNCTION p(remove INT) 
-  RETURNS VARCHAR(<N>)
+  RETURNS TEXT
   NOT DETERMINISTIC
   MODIFIES SQL DATA
   BEGIN 
-    DECLARE data VARCHAR(<N>);
+    DECLARE data TEXT;
     DECLARE rowid BIGINT;
     SELECT k, d INTO rowid, data FROM q ORDER BY p DESC,k LIMIT 1 FOR UPDATE; 
     IF rowid > 0 THEN
